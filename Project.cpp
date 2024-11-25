@@ -1,12 +1,14 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
 bool exitFlag;
+Player *snake;
 
 void Initialize(void);
 void GetInput(void);
@@ -39,8 +41,10 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-
     exitFlag = false;
+
+    snake = new Player(nullptr);    
+
 }
 
 void GetInput(void)
@@ -56,6 +60,22 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 20; j++){
+            if(i == 0 || i == 9 || j == 0 || j == 19){
+                MacUILib_printf("%c", '#');
+            }
+            else if (i == snake->getPlayerPos().pos->x && j == snake->getPlayerPos().pos->y){
+                MacUILib_printf("%c", '*');
+            }
+            else
+            {
+                
+                MacUILib_printf("%c",' ');
+            }
+        }
+        MacUILib_printf("\n");
+    }
 }
 
 void LoopDelay(void)
