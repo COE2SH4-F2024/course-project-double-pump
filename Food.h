@@ -3,6 +3,8 @@
 
 // #include "GameMechs.h"
 #include "objPos.h"
+#include <time.h>
+#include <stdlib.h>
 // #include "objPosArrayList.h"
 
 class Food
@@ -18,9 +20,11 @@ class Food
 
         Food();
         ~Food();
+        Food(const Food &other);
+        Food& operator=(const Food& other);
 
         objPos getFoodPos() const; // Upgrade this in iteration 3.       
-        void generateFood();
+        void generateFood(objPos blockOff);
 
         // More methods to be added here
 

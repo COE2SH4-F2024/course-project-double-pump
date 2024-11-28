@@ -3,6 +3,8 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include "Food.h"
+#include "objPosArrayList.h"
 
 using namespace std;
 
@@ -59,7 +61,9 @@ void GetInput(void)
 }
 
 void RunLogic(void)
-{
+{   
+
+
     char input = game->getInput();
 
     if(input == 27){
