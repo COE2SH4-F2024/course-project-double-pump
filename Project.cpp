@@ -13,7 +13,7 @@ using namespace std;
 
 Player *snake;
 GameMechs *game;
-
+Food *food;
 
 void Initialize(void);
 void GetInput(void);
@@ -47,7 +47,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     game = new GameMechs();
-    snake = new Player(game);    
+    snake = new Player(game);  
+    food = new Food();  
 
 }
 
@@ -63,7 +64,6 @@ void GetInput(void)
 void RunLogic(void)
 {   
 
-
     char input = game->getInput();
 
     if(input == 27){
@@ -77,6 +77,10 @@ void RunLogic(void)
     snake->updatePlayerDir();
     snake->movePlayer();
     game->clearInput();
+    if ((food->getFoodPos().pos->x == snake->getPlayerPos().pos->x)&&(food->getFoodPos().pos->y == snake->getPlayerPos().pos->y)){
+        food->generateFood(snake->getPlayerPos());
+    }
+
     
 }
 
@@ -92,6 +96,9 @@ void DrawScreen(void)
             }
             else if (i == snake->getPlayerPos().pos->x && j == snake->getPlayerPos().pos->y){
                 MacUILib_printf("%c", snake->getPlayerPos().getSymbol());
+            }
+            else if (i == food->getFoodPos().pos->x && j == food->getFoodPos().pos->y){
+                MacUILib_printf("%c", food->getFoodPos().getSymbol());
             }
             else
             {
@@ -120,6 +127,7 @@ void CleanUp(void)
     } else {
         MacUILib_printf("You Win!");
     }
+        
 
     MacUILib_uninit();
 }

@@ -20,8 +20,8 @@ class Food
 
         Food();
         ~Food();
-        Food(const Food &other);
-        Food& operator=(const Food& other);
+        // Food(const Food &other);
+        // Food& operator=(const Food& other);
 
         objPos getFoodPos() const; // Upgrade this in iteration 3.       
         void generateFood(objPos blockOff);

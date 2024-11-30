@@ -5,8 +5,8 @@ Food::Food()        // Constructor
 {
     srand(time(NULL));
 
-    foodPos.pos->x = (rand() % 18)+1;;
-    foodPos.pos->y = (rand() % 8)+1;;
+    foodPos.pos->x = (rand() % 8)+1;;
+    foodPos.pos->y = (rand() % 18)+1;;
     foodPos.symbol = '$';
 }
 
@@ -17,23 +17,23 @@ Food::~Food()
 
 //need rule of 6?
 
-Food::Food(const Food &other){
-    foodPos.pos = new Pos;
-    foodPos.pos->x = other.foodPos.pos->x;
-    foodPos.pos->y = other.foodPos.pos->y;
-    foodPos.symbol = other.foodPos.symbol;
-}
+// Food::Food(const Food &other){
+//     foodPos.pos = new Pos;
+//     foodPos.pos->x = other.foodPos.pos->x;
+//     foodPos.pos->y = other.foodPos.pos->y;
+//     foodPos.symbol = other.foodPos.symbol;
+// }
 
-Food& Food::operator=(const Food& other){
-    delete foodPos.pos;
+// Food& Food::operator=(const Food& other){
+//     delete foodPos.pos;
 
-    foodPos.pos = new Pos;
-    foodPos.pos->x = other.foodPos.pos->x;
-    foodPos.pos->y = other.foodPos.pos->y;
-    foodPos.symbol = other.foodPos.symbol;
+//     foodPos.pos = new Pos;
+//     foodPos.pos->x = other.foodPos.pos->x;
+//     foodPos.pos->y = other.foodPos.pos->y;
+//     foodPos.symbol = other.foodPos.symbol;
 
-    return *this;
-}
+//     return *this;
+// }
 
 
 objPos Food::getFoodPos() const
@@ -52,8 +52,8 @@ void Food::generateFood(objPos blockOff)
     while (numFlag == 1){
 
         numFlag = 0;
-        possible_x = (rand() % 18)+1;
-        possible_y = (rand() % 8)+1;
+        possible_x = (rand() % 8)+1;
+        possible_y = (rand() % 18)+1;
 
         if (possible_x == blockOff.pos->x && possible_y == blockOff.pos->y){
             numFlag = 1;
