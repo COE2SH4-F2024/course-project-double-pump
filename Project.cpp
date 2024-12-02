@@ -47,8 +47,9 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     game = new GameMechs();
-    snake = new Player(game);  
     food = new Food();  
+    snake = new Player(game,food);    
+    
 
 }
 
@@ -68,10 +69,10 @@ void RunLogic(void)
 
     if(input == 27){
         game->setExitTrue();
-    } else if (input == '1'){
-        game->incrementScore();
-    } else if (input == 'l'){
+    } 
+    else if (snake->checkSelfCollision()){
         game->setLoseFlag();
+        game->setExitTrue();
     
     }
     snake->updatePlayerDir();
@@ -91,9 +92,12 @@ void DrawScreen(void)
 
     for(int i = 0; i < game->getBoardSizeY(); i++){
         for(int j = 0; j < game->getBoardSizeX(); j++){
-            if(i == 0 || i == game->getBoardSizeY()-1|| j == 0 || j == game->getBoardSizeX()-1){
-                MacUILib_printf("%c", '#');
+            if(i == 0 || i == game->getBoardSizeY()-1){
+                MacUILib_printf("%c", 205);
+            } else if ( j == 0 || j == game->getBoardSizeX()-1){
+                MacUILib_printf("%c", 186);
             }
+            
             // else if (i == snake->getPlayerPos()->getHeadElement().pos->x && j == snake->getPlayerPos()->getHeadElement().pos->y){
             //     MacUILib_printf("%c", snake->getPlayerPos()->getHeadElement().getSymbol());
             // }
@@ -102,7 +106,7 @@ void DrawScreen(void)
             }
             else
             {
-
+                
                 int flag = 0;
                 for (int k = 0; k < snake->getPlayerPos()->getSize(); k++){
                     flag = 0;
@@ -126,7 +130,10 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("Score: %d", game->getScore());
+    MacUILib_printf("Score: %d \n", game->getScore());
+    MacUILib_printf("Food location x: %d y: %d \n", food->getFoodPos().pos->x, food->getFoodPos().pos->y);
+    MacUILib_printf("Food Bool: %d \n", snake->checkFoodConsumption());
+    MacUILib_printf("player location x: %d y: %d", snake->getPlayerPos()->getHeadElement().pos->x, snake->getPlayerPos()->getHeadElement().pos->y);
 }
 
 void LoopDelay(void)
@@ -138,15 +145,15 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     game->clearInput();
-    MacUILib_clearScreen(); 
+    MacUILib_clearScreen();    
     delete snake;
     delete game;
     delete food;   
 
     if (game->getLoseFlagStatus() == true ){
         MacUILib_printf("Snake ate itself! Game over!");
-    } else {
-        MacUILib_printf("You Win!");
+    }else {
+         MacUILib_printf("Game exited");
     }
         
 

@@ -7,7 +7,7 @@ Food::Food()        // Constructor
 
     foodPos.pos->x = (rand() % 8)+1;;
     foodPos.pos->y = (rand() % 18)+1;;
-    foodPos.symbol = '$';
+    foodPos.symbol = 233;
 }
 
 Food::~Food()
