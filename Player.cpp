@@ -5,25 +5,30 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.pos->x = 5;
-    playerPos.pos->y = 10;
-    playerPos.symbol = '*';
+    playerPosList = new objPosArrayList;
+    objPos headpos(5,10,'*');
+    playerPosList->insertHead(headpos);
+    
+    // playerPos.pos->y = 10;
+    // playerPos.symbol = '*';
 
     // more actions to be included
+    // starting coords (5,10)
 }
 
 
 Player::~Player()
 {   
-    delete playerPos.pos;
-    delete mainGameMechsRef;
+    delete playerPosList;
+    // delete mainGameMechsRef;
     // delete any heap members here
 }
 
-objPos Player::getPlayerPos() const
+objPosArrayList* Player::getPlayerPos() const
 {
-    // return the reference to the playerPos arrray list
-    return playerPos;
+    // return the reference to the playerPos array list
+    return playerPosList;
+    
 }
 
 void Player::updatePlayerDir()
@@ -98,35 +103,56 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
+    objPos playerHead = playerPosList->getHeadElement();
+    
     switch (myDir)
     {
     case LEFT:
-        playerPos.pos->y--;
-        if (playerPos.pos->y < 1)
+        // playerPos.pos->y--;
+        playerHead.pos->y--;
+        
+        if (playerHead.pos->y < 1)
         {
-            playerPos.pos->y = mainGameMechsRef->getBoardSizeX()-2;
+            playerHead.pos->y = mainGameMechsRef->getBoardSizeX()-2;
         }
+        playerPosList->insertHead(playerHead);
+        playerPosList->removeTail();
+
         break;
     case RIGHT:
-        playerPos.pos->y++;
-        if (playerPos.pos->y > mainGameMechsRef->getBoardSizeX()-2)
+        playerHead.pos->y++;
+        
+        if (playerHead.pos->y > mainGameMechsRef->getBoardSizeX()-2)
         {
-           playerPos.pos->y = 1;
+           playerHead.pos->y = 1;
         }
+        playerPosList->insertHead(playerHead);
+        playerPosList->removeTail();
+
         break;
+        
+
     case UP:
-        playerPos.pos->x--;
-        if (playerPos.pos->x < 1)
+        playerHead.pos->x--;
+        
+        if (playerHead.pos->x < 1)
         {
-            playerPos.pos->x = mainGameMechsRef->getBoardSizeY()-2;
+            playerHead.pos->x = mainGameMechsRef->getBoardSizeY()-2;
         }
+        playerPosList->insertHead(playerHead); 
+        playerPosList->removeTail();
+
         break;
     case DOWN:
-        playerPos.pos->x++;
-        if (playerPos.pos->x > mainGameMechsRef->getBoardSizeY()-2)
+        playerHead.pos->x++;
+        
+        if (playerHead.pos->x > mainGameMechsRef->getBoardSizeY()-2)
         {
-            playerPos.pos->x = 1;
+            playerHead.pos->x = 1;
         }
+        playerPosList->insertHead(playerHead);
+        playerPosList->removeTail();
+
         break;
 
     default:
