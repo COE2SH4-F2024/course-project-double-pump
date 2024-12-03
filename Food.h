@@ -5,7 +5,7 @@
 #include "objPos.h"
 #include <time.h>
 #include <stdlib.h>
-// #include "objPosArrayList.h"
+#include "objPosArrayList.h"
 
 class Food
 {
@@ -25,8 +25,8 @@ class Food
 
         objPos getFoodPos() const; // Upgrade this in iteration 3. 
         objPos getBombPos() const;      
-        void generateFood(objPos blockOff);
-        void generateBomb(objPos blockOff);
+        void generateFood(objPosArrayList* blockOff);
+        void generateBomb(objPosArrayList* blockOff);
 
         // More methods to be added here
 

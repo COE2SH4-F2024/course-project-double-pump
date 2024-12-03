@@ -80,8 +80,8 @@ void RunLogic(void)
     game->clearInput();
     if ((food->getFoodPos().pos->x == snake->getPlayerPos()->getHeadElement().pos->x)&&(food->getFoodPos().pos->y == snake->getPlayerPos()->getHeadElement().pos->y)){
         
-        food->generateFood(snake->getPlayerPos()->getHeadElement());
-        food->generateBomb(snake->getPlayerPos()->getHeadElement());
+        food->generateFood(snake->getPlayerPos());
+        food->generateBomb(snake->getPlayerPos());
         
         
     }
@@ -115,14 +115,6 @@ void DrawScreen(void)
                 MacUILib_printf("%c", food->getBombPos().getSymbol());
             }
 
-            else if (food->getFoodPos().pos->x == snake->getPlayerPos()->getElement(i).getObjPos().pos->x && food->getFoodPos().pos->y == snake->getPlayerPos()->getElement(i).getObjPos().pos->y){
-                food->generateFood(snake->getPlayerPos()->getElement(i).getObjPos());
-            }
-
-            else if (food->getBombPos().pos->x == snake->getPlayerPos()->getElement(i).getObjPos().pos->x && food->getBombPos().pos->y == snake->getPlayerPos()->getElement(i).getObjPos().pos->y){
-                food->generateBomb(snake->getPlayerPos()->getElement(i).getObjPos());
-            }
-
             else
             {
                 
@@ -150,9 +142,7 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
     MacUILib_printf("Score: %d \n", game->getScore());
-    MacUILib_printf("Food location x: %d y: %d \n", food->getFoodPos().pos->x, food->getFoodPos().pos->y);
-    MacUILib_printf("Food Bool: %d \n", snake->checkFoodConsumption());
-    MacUILib_printf("player location x: %d y: %d", snake->getPlayerPos()->getHeadElement().pos->x, snake->getPlayerPos()->getHeadElement().pos->y);
+    
 }
 
 void LoopDelay(void)

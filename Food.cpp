@@ -1,4 +1,5 @@
 #include "Food.h"
+#include "objPosArrayList.h"
 
 
 Food::Food()        // Constructor
@@ -51,7 +52,7 @@ objPos Food::getBombPos() const
     return bombPos;
 }
 
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList* blockOff)
 {   
 
     srand(time(NULL));
@@ -64,13 +65,14 @@ void Food::generateFood(objPos blockOff)
         numFlag = 0;
         possible_x = (rand() % 8)+1;
         possible_y = (rand() % 18)+1;
+        for(int i = 0; i < blockOff->getSize(); i++){
+            if (possible_x == blockOff->getElement(i).pos->x && possible_y == blockOff->getElement(i).pos->y){
+                numFlag = 1;
+            }
 
-        if (possible_x == blockOff.pos->x && possible_y == blockOff.pos->y){
-            numFlag = 1;
-        }
-
-        if (possible_y == foodPos.pos->y && possible_x == foodPos.pos->x){
-            numFlag = 1;
+            if (possible_y == foodPos.pos->y && possible_x == foodPos.pos->x){
+                numFlag = 1;
+            }
         }
 
         if (numFlag == 0){
@@ -85,8 +87,7 @@ void Food::generateFood(objPos blockOff)
     }
 
 }
-
-void Food::generateBomb(objPos blockOff)
+void Food::generateBomb(objPosArrayList* blockOff)
 {   
 
     srand(time(NULL));
@@ -99,16 +100,17 @@ void Food::generateBomb(objPos blockOff)
         Flag = 0;
         p_x = (rand() % 8)+1;
         p_y = (rand() % 18)+1;
+        for(int i = 0; i < blockOff->getSize(); i++){
+            if (p_x == blockOff->getElement(i).pos->x && p_y == blockOff->getElement(i).pos->y){
+                Flag = 1;
+            }
 
-        if (p_x == blockOff.pos->x && p_y == blockOff.pos->y){
-            Flag = 1;
-        }
-
-        else if (p_y == foodPos.pos->y && p_x == foodPos.pos->x){
-            Flag = 1;
+            if (p_y == foodPos.pos->y && p_x == foodPos.pos->x){
+                Flag = 1;
+            }
         }
         
-        else if (p_y == bombPos.pos->y && p_x == bombPos.pos->x){
+        if (p_y == bombPos.pos->y && p_x == bombPos.pos->x){
             Flag = 1;
         }
 
