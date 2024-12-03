@@ -23,13 +23,16 @@ class Food
         // Food(const Food &other);
         // Food& operator=(const Food& other);
 
-        objPos getFoodPos() const; // Upgrade this in iteration 3.       
+        objPos getFoodPos() const; // Upgrade this in iteration 3. 
+        objPos getBombPos() const;      
         void generateFood(objPos blockOff);
+        void generateBomb(objPos blockOff);
 
         // More methods to be added here
 
     private:
-        objPos foodPos; // Upgrade this in iteration 3.       
+        objPos foodPos; // Upgrade this in iteration 3.  
+        objPos bombPos;     
 
 };
 

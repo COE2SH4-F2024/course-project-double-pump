@@ -79,7 +79,15 @@ void RunLogic(void)
     snake->movePlayer();
     game->clearInput();
     if ((food->getFoodPos().pos->x == snake->getPlayerPos()->getHeadElement().pos->x)&&(food->getFoodPos().pos->y == snake->getPlayerPos()->getHeadElement().pos->y)){
+        
         food->generateFood(snake->getPlayerPos()->getHeadElement());
+        food->generateBomb(snake->getPlayerPos()->getHeadElement());
+        
+        
+    }
+    if ((food->getBombPos().pos->x == snake->getPlayerPos()->getHeadElement().pos->x)&&(food->getBombPos().pos->y == snake->getPlayerPos()->getHeadElement().pos->y)){
+        game->setLoseFlag();
+        game->setExitTrue();
     }
 
     
@@ -92,10 +100,8 @@ void DrawScreen(void)
 
     for(int i = 0; i < game->getBoardSizeY(); i++){
         for(int j = 0; j < game->getBoardSizeX(); j++){
-            if(i == 0 || i == game->getBoardSizeY()-1){
-                MacUILib_printf("%c", 205);
-            } else if ( j == 0 || j == game->getBoardSizeX()-1){
-                MacUILib_printf("%c", 186);
+            if((i == 0 || i == game->getBoardSizeY()-1||j == 0 || j == game->getBoardSizeX()-1)){
+                MacUILib_printf("#");
             }
             
             // else if (i == snake->getPlayerPos()->getHeadElement().pos->x && j == snake->getPlayerPos()->getHeadElement().pos->y){
@@ -104,6 +110,19 @@ void DrawScreen(void)
             else if (i == food->getFoodPos().pos->x && j == food->getFoodPos().pos->y){
                 MacUILib_printf("%c", food->getFoodPos().getSymbol());
             }
+
+            else if (i == food->getBombPos().pos->x && j == food->getBombPos().pos->y){
+                MacUILib_printf("%c", food->getBombPos().getSymbol());
+            }
+
+            else if (food->getFoodPos().pos->x == snake->getPlayerPos()->getElement(i).getObjPos().pos->x && food->getFoodPos().pos->y == snake->getPlayerPos()->getElement(i).getObjPos().pos->y){
+                food->generateFood(snake->getPlayerPos()->getElement(i).getObjPos());
+            }
+
+            else if (food->getBombPos().pos->x == snake->getPlayerPos()->getElement(i).getObjPos().pos->x && food->getBombPos().pos->y == snake->getPlayerPos()->getElement(i).getObjPos().pos->y){
+                food->generateBomb(snake->getPlayerPos()->getElement(i).getObjPos());
+            }
+
             else
             {
                 

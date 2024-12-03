@@ -5,7 +5,7 @@ Player::Player(GameMechs *thisGMRef, Food *thisFood)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     playerPosList = new objPosArrayList;
-    objPos headpos(5, 10, 254);
+    objPos headpos(5, 10, '=');
     playerPosList->insertHead(headpos);
     food = thisFood;
 

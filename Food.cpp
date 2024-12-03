@@ -7,7 +7,12 @@ Food::Food()        // Constructor
 
     foodPos.pos->x = (rand() % 8)+1;;
     foodPos.pos->y = (rand() % 18)+1;;
-    foodPos.symbol = 233;
+    foodPos.symbol = '@';
+
+    bombPos.pos->x = (rand() % 8)+1;;
+    bombPos.pos->y = (rand() % 18) + 1;;
+    bombPos.symbol = 'B';
+
 }
 
 Food::~Food()
@@ -41,6 +46,11 @@ objPos Food::getFoodPos() const
     return foodPos;
 }
 
+objPos Food::getBombPos() const
+{
+    return bombPos;
+}
+
 void Food::generateFood(objPos blockOff)
 {   
 
@@ -70,6 +80,45 @@ void Food::generateFood(objPos blockOff)
 
         else{
             numFlag = 1;
+        }
+
+    }
+
+}
+
+void Food::generateBomb(objPos blockOff)
+{   
+
+    srand(time(NULL));
+
+    int p_x, p_y;
+    
+    int Flag = 1;
+    while (Flag == 1){
+
+        Flag = 0;
+        p_x = (rand() % 8)+1;
+        p_y = (rand() % 18)+1;
+
+        if (p_x == blockOff.pos->x && p_y == blockOff.pos->y){
+            Flag = 1;
+        }
+
+        else if (p_y == foodPos.pos->y && p_x == foodPos.pos->x){
+            Flag = 1;
+        }
+        
+        else if (p_y == bombPos.pos->y && p_x == bombPos.pos->x){
+            Flag = 1;
+        }
+
+        if (Flag == 0){
+            bombPos.pos->x = p_x;
+            bombPos.pos->y = p_y;
+        }
+
+        else{
+            Flag = 1;
         }
 
     }
